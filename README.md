@@ -5,9 +5,9 @@ A productivity Discord bot that sets up Pomodoro sessions for users.
 
 ### Single Pomodoro Session
 
-*  `;pomo help`: View the pomodoro help message 
-*  `;pomo [time in minutes]`: To start a single pomodoro session. 
-    *   Example: `;pomo 25` to start a 25-minute pomodoro session. 
+*  `;pomo help`: View the Pomodoro help message 
+*  `;pomo [time in minutes]`: To start a single Pomodoro session. 
+    *   Example: `;pomo 25` to start a 25-minute Pomodoro session. 
 
 
 ### Multiple Chained Pomodoro Sessions
