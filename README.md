@@ -13,3 +13,6 @@ A productivity Discord bot that sets up Pomodoro sessions for users.
 ### Multiple Chained Pomodoro Sessions
 * `;multi [# of sessions] (# min work / # min break)`: To run multiple work/break Pomodoro sessions in a row. Defaults to 25 minutes work and 5 minutes break if no bracket arguments are specified by the user. 
     * Example: `;multi 3 (25/5)` to run 3 25-minute work sessions and 3 5-minute break sessions. 
+
+### Group Study
+* React to a `;pomo` command within the first 10 seconds of it being sent to the channel, and the bot will add you to that Pomodoro session and ping you when it's complete.
