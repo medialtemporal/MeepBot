@@ -4,11 +4,9 @@ from datetime import datetime
 from datetime import timedelta
 import discord.ext
 from discord.ext import commands
-import random
-import time
 
 # Bot token
-TOKEN = 'insert token here'
+TOKEN = 'insert token'
 
 # Sets up a help command - very basic for now
 help_command = commands.DefaultHelpCommand(no_category='Commands')
@@ -41,6 +39,9 @@ async def pomo(ctx, *arg):
                            'Use `;multi [# of sessions] (# min work / # min break)` to run multiple work/break '
                            'pomodoro sessions in a row. Defaults to 25 min work /5 min break if you omit bracket '
                            'arguments.\n\n'
+                           '**Join a Group Session:**\n'
+                           'React to any `;pomo` or `;multi` command to be added to that study session and get pinged '
+                           'when the session is complete.\n\n '
                            'DM @sora#7079 with any questions or suggestions!')
         # Basic single pomodoro command
         elif arg:
@@ -51,33 +52,45 @@ async def pomo(ctx, *arg):
                     raise OverflowError  # Raise OverflowError and specify that user should enter a value under 250
 
                 # Group study feature
+                await ctx.send(f'{ctx.author.name} has started a Pomodoro session! React to the original message to '
+                               f'join in.')
                 group_members = []
-                await asyncio.sleep(10)  # Adds a 10-second delay for other users to react to the pomodoro message
-                for reaction in ctx.message.reactions:
-                    member_list = await reaction.users().flatten()
-                    for member in member_list:
-                        if ctx.author != member:
-                            group_members.append(member.id)
-                print(group_members)
-
                 string_to_ping = ""
-                for member in group_members:
-                    temp = " <@" + str(member) + ">"
-                    string_to_ping = string_to_ping + temp
-                print(string_to_ping)
+                async with ctx.channel.typing():
+                    await asyncio.sleep(5)  # Adds a 5-second delay for other users to react to the Pomodoro message
 
+                # Starting Pomodoro
                 ping_time = time_delta(pomodoro_time)  # Calculates the appropriate time in the future to ping user
-
                 await ctx.send(f'Pomodoro started for **{pomodoro_time}** minutes! '
                                f'You will be pinged at {ping_time}.')
-                await asyncio.sleep(pomodoro_time * 60)
+                await asyncio.sleep(pomodoro_time * 60)  # Minutes to seconds conversion for asyncio
+
+                # Group Study
+                if ctx.message.reactions:
+                    for reaction in ctx.message.reactions:
+                        member_list = await reaction.users().flatten()
+                        for member in member_list:
+                            if ctx.author != member and member not in member_list:
+                                group_members.append(member.id)
+                    string_to_ping = ""
+                    for member in group_members:
+                        temp = " <@" + str(member) + ">"
+                        string_to_ping = string_to_ping + temp
+
                 await ctx.send(f'Pomodoro completed, {ctx.author.mention}{string_to_ping}!')
             except ValueError:
                 await ctx.send('Please enter an integer value in minutes. Use `;pomodoro help` for commands help.')
             except OverflowError:
                 await ctx.send('Please enter an integer value smaller than 250.')
     except TypeError:
-        print('type error occurred')
+        print('type error')
+
+
+@pomo.error
+async def command_name_error(ctx, error):
+    if isinstance(error, commands.CommandOnCooldown):
+        em = discord.Embed(title=f"", description=f"Try again in {error.retry_after:.2f}s.")
+        await ctx.send(embed=em)
 
 
 @client.command()
@@ -99,22 +112,43 @@ async def multi(ctx, sessions, *timing):
                     raise TypeError
             else:
                 await ctx.send('Defaulting to 25 min work/5 min break.')
-        await ctx.send(f'Added **{sessions}** pomodoro sessions.\n')
+
+        # Group study feature
+        await ctx.send(f'Added **{sessions}** pomodoro sessions. React to the original message to join in with '
+                       f'{ctx.author.name}!')
+        group_members = []
+        async with ctx.channel.typing():
+            await asyncio.sleep(5)  # Adds a 5-second delay for other users to react to the Pomodoro message
+
         session = 1
         print(pomodoro_length)
         print(break_length)
+        string_to_ping = ""
         for i in range(sessions):
             ping_time = time_delta(pomodoro_length)
             await ctx.send(f'Starting pomodoro session **#{session}**, {ctx.author.mention}. '
                            f'You will be pinged for a break at {ping_time}!')
             await asyncio.sleep(int(pomodoro_length) * 60)
+
+            # Group Study
+            if ctx.message.reactions:
+                for reaction in ctx.message.reactions:
+                    member_list = await reaction.users().flatten()
+                    for member in member_list:
+                        if ctx.author != member and member not in member_list:
+                            group_members.append(member.id)
+                string_to_ping = ""
+                for member in group_members:
+                    temp = " <@" + str(member) + ">"
+                    string_to_ping = string_to_ping + temp
+
             break_ping = time_delta(break_length)
             if i < (sessions - 1):
-                await ctx.send(f'Pomodoro **#{session}** completed, {ctx.author.mention}! '
+                await ctx.send(f'Pomodoro **#{session}** completed, {ctx.author.mention}{string_to_ping}! '
                                f'Break until {break_ping}.')
                 await asyncio.sleep(int(break_length) * 60)
             session += 1
-        await ctx.send(f'Congrats, {ctx.author.mention}! '
+        await ctx.send(f'Congrats, {ctx.author.mention}{string_to_ping}! '
                        f'You completed **{sessions}** pomodoro sessions.')
     except TypeError:
         await ctx.send('You messed up the syntax somehow. Try `;pomo help` to see the proper syntax.')
