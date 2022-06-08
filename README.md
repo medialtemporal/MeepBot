@@ -15,4 +15,4 @@ A productivity Discord bot that sets up Pomodoro sessions for users.
     * Example: `;multi 3 (25/5)` to run 3 25-minute work sessions and 3 5-minute break sessions. 
 
 ### Group Study
-* React to any `;pomo` command and the bot will add you to that Pomodoro session and ping you when it's complete.
+* React to any `;pomo` or `;multi` command and the bot will add you to that Pomodoro session and ping you when it's complete.
