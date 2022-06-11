@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <!-- Meta -->
+    <meta charset="UTF-8">
+    <meta name="author" content="Sonia Persaud">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=yes">
+
+    <!-- Linking stylesheet -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Importing favicon -->
+    <link rel="shortcut icon" href="favicon.png"/>
+
+    <title>Meep: A Productivity Discord Bot</title>
+
+    <!-- Importing fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,600;1,400;1,600&family=Source+Code+Pro:wght@700&family=Source+Serif+Pro:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+
+</head>
+
+
+<body>
+<h1>Meep</h1>
+<h2>A Productivity Discord Bot</h2>
+
+<h3>Introducing Meep</h3>
+<p>
+    In the late 1980s, Francesco Cirillo developed the <strong>Pomodoro Technique</strong>, a time management method. 
+    <br><br>
+    The classic version involves four consecutive sessions of 25 minutes of focus time with 5 minutes of break in between, followed by a longer break. Variations, such as two sessions of 50 minutes of work time with a 10-minute break in between, are also popular. 
+    <br><br>
+    Today, the Pomodoro technique is used worldwide by those who want to optimize their productivity. 
+    <br><br>
+    <strong>Meep</strong> is a straightforward Discord bot that helps you to implement the Pomodoro technique, in whichever way works best for you. Offering a variety of different options, including customizable work and break lengths and a group study feature, Meep is designed to help you keep on track and accomplish your goals.
+</p>
+
+<br>
+<hr>
+
+<h3>Commands</h3>
+
+<h4>Single Pomodoro Session</h4>
+<ul>
+    <li><code>;pomo [time in minutes]</code>: To start a single Pomodoro session.</li>
+    <li>Example: <code>;pomo 25</code> to start a 25-minute Pomodoro session.</li>
+</ul>
+
+<h4>Multiple Chained Pomodoro Sessions</h4>
+<ul>
+    <li><code>;multi [# of sessions] (# min work / # min break)</code>: To run multiple work/break Pomodoro sessions in a row. Defaults to 25 minutes work and 5 minutes break if no bracket arguments are specified by the user.</li>
+    <li>Example: <code>;multi 3 (25/5)</code> to run 3 25-minute work sessions and 3 5-minute break sessions.</li>
+</ul>
+
+<h4>Help Command</h4>
+<ul>
+    <li><code>;pomo help</code>: View the Pomodoro help message.</li>
+    <li><code>;help</code> to view a general help message.</li>
+</ul>
+
+<br>
+<hr>
+
+<h3>Features</h3>
+<h4>Group Study</h4>
+<ul>
+    <li>Reacting to any <code>;pomo</code> command will add you to that Pomodoro session and ping you when it's complete.</li>
+    <li style="margin-left:2em;list-style-type: circle">If you remove the reaction before the end of the session, you will not be pinged.</li>
+    <li>Reacting to any <code>;multi</code> command will add you to that group of Pomodoro sessions until the sessions are completed.</li>
+    <li style="margin-left:2em;list-style-type: circle">Removing the reaction will remove you from the group study session.</li>
+</ul>
+<h4>Cancel Pomodoro</h4>
+<ul>
+    <li>React to any <code>;pomo</code> session started by you to cancel it.</li>
+    <li style="margin-left:2em;list-style-type: circle">This will cancel the session for all users.</li>
+</ul>
+
+<br>
+<hr>
+
+<h3>What's Next</h3>
+<ul>
+    <li>Deleting old messages to keep channels clear of clutter</li>
+    <li>User statistics</li>
+    <li>Joining voice and auto-muting users; playing study music</li>
+</ul>
+
+<div class='footer'>
+© 2022 Sonia Persaud
+<a href="https://github.com/medialtemporal/" style="margin-left:1em;"><img src="github.png" height='14m' width='14em' /></a>
+<a href="https://twitter.com/soniarpersaud" style="margin-left:0.5em;"><img src="twitter.png" height='14m' width='14em' /></a>
+</div>
+
+</body>
+
+
+</html>
