@@ -1,6 +1,6 @@
 # MEEP - a Pomodoro Bot
-A productivity Discord bot that sets up Pomodoro sessions for users.
-medialtemporal.github.io/MeepBot
+A productivity Discord bot that sets up Pomodoro sessions for users. <br>
+https://medialtemporal.github.io/MeepBot
 
 ## Commands
 
